@@ -1,0 +1,7 @@
+Hostname: $(container_1)
+IP Address: 172.18.0.3
+HOSTNAME=e5f258a3cba8
+SHLVL=1
+HOME=/root
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PWD=/

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  container_1:
+    image: alpine
+    container_name: container_1
+    volumes:
+      - demo_volume:/data    # Single volume bound to /data in all containers
+    command: >
+      sh -c "echo 'Hostname: $(container_1)' > /data/container_1_info.txt && 
+              echo 'IP Address:' $(hostname -i) >> /data/container_1_info.txt && 
+              env >> /data/container_1_info.txt"
+
+  container_2:
+    image: alpine
+    container_name: container_2
+    volumes:
+      - demo_volume:/data    # Single volume bound to /data in all containers
+    command: >
+      sh -c "echo 'Hostname: $(container_2)' > /data/container_2_info.txt && 
+              echo 'IP Address:' $(hostname -i) >> /data/container_2_info.txt && 
+              env >> /data/container_2_info.txt"
+
+  container_3:
+    image: alpine
+    container_name: container_3
+    volumes:
+      - demo_volume:/data    
+    command: >
+      sh -c "echo 'Hostname: $(container_3)' > /data/container_3_info.txt && 
+              echo 'IP Address:' $(hostname -i) >> /data/container_3_info.txt && 
+              env >> /data/container_3_info.txt"
+
+volumes:
+  demo_volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data  # Bind to the data directory in your workspace

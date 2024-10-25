@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    tty: true
+    build:
+      context: ./app  # Context is set to the app directory
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - mynetwork
+    volumes:
+      - pages:/usr/src/app/data  # Bind mount to the data directory in your workspace
+
+networks:
+  mynetwork:
+    driver: bridge
+volumes:
+  pages:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data  
