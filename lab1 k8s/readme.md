@@ -3,7 +3,7 @@
 To create the pod, use a `YAML` file with the following command:
 
 ```bash
-kubectl apply -f ymlfiles/q1/redis-pod.yml
+kubectl apply -f q1/redis-pod.yml
 ```
 
 ## 1. Verify Pod Creation
@@ -44,7 +44,7 @@ After port-forwarding, connect to Redis locally with:
 Apply the YAML file:
 
 ```bash
-kubectl apply -f ymlfiles/q2/nginx-pod.yaml
+kubectl apply -f q2/nginx-pod.yaml
 ```
 
 ![images/Image illustrating the process](images/image-3.png)
@@ -62,8 +62,7 @@ kubectl get pod nginx -o wide
 1. Apply:
 
    ```bash
-   kubectl apply -f ymlfiles/q3/nginx-pod.yaml
-   
+   kubectl apply -f q3/nginx-pod.yaml
    ```
 
    ![images/Image illustrating the process](images/image-5.png)
@@ -91,7 +90,7 @@ kubectl get replicaset
 1. Apply the YAML file:
 
    ```bash
-   kubectl apply -f ymlfiles/q4/replica-set-1.yaml
+   kubectl apply -f q4/replica-set-1.yaml
    ```
 
    ![images/Image illustrating the process](images/image-8.png)
@@ -112,7 +111,7 @@ Modify the replicas in the YAML file:
 
 ---
 
-
+---
 
 # 9. Check the number of READY Pods in `replica-set-1`
 
@@ -159,7 +158,7 @@ kubectl get replicaset
 1. Apply the YAML file:
 
    ```bash
-   kubectl apply -f ymlfiles/q5/deployment-1.yaml
+   kubectl apply -f q5/deployment-1.yaml
    ```
 ![alt text](images/image-15.png)
 
