@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=docker" style="width:30%;" />
+</p>
+
 # 1. Create a Pod Named Redis with the Redis images/Image
 
 To create the pod, use a `YAML` file with the following command:
