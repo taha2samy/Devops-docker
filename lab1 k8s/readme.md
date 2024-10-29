@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=docker" style="width:30%;" />
+  <img src="https://skillicons.dev/icons?i=kubernetes" style="width:30%;" />
 </p>
 
 # 1. Create a Pod Named Redis with the Redis images/Image
