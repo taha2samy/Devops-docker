@@ -1,4 +1,6 @@
-<img src="https://skillicons.dev/icons?i=kubernetes" />
+<p align="center">
+  <img src="https://skillicons.dev/icons?i=kubernetes" style="width:30%;" />
+</p>
 
 # 1. How many Namespaces exist on the system?
 
