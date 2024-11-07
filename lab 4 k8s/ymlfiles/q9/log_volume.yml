@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+spec:
+  storageClassName: manual
+
+  capacity:
+    storage: 100Mi  # Ensure this matches the PVC request or is larger
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /hi_im_here  # Ensure this path is correct on the host machine
+    type: DirectoryOrCreate

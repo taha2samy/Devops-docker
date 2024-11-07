@@ -2,53 +2,43 @@
   <img src="https://skillicons.dev/icons?i=kubernetes" style="width:30%;" />
 </p>
 
-# 1. **Question:**  
-How can I find out the total number of ConfigMaps in my Kubernetes environment?
 
-**Answer:**  
-To find the total number of ConfigMaps in the environment, you can use the following `kubectl` command:
 
-**for linux**
+
+---
+
+## 1. **How to Check the Total Number of ConfigMaps in the Environment**
+
+To find the total number of ConfigMaps in your Kubernetes environment, use the following `kubectl` commands:
+
+### **Linux**
 ```bash
 kubectl get configmaps --all-namespaces --no-headers | wc -l
 ```
-![alt text](image-1.png)
+![ConfigMap Count on Linux](image-1.png)
 
-**for windows**
-
+### **Windows**
 ```powershell
 kubectl get configmaps --all-namespaces --no-headers | Measure-Object -Line
 ```
-![alt text](image.png)
+![ConfigMap Count on Windows](image.png)
 
+These commands list all ConfigMaps across all namespaces, remove headers for a cleaner output, and count the entries.
 
+---
 
+## 2. **Creating a ConfigMap with Specific Specifications**
 
-This command retrieves all ConfigMaps across all namespaces and counts the total number of entries. Here's a breakdown of the command:
-- `kubectl get configmaps --all-namespaces`: Lists all ConfigMaps in every namespace.
-- `--no-headers`: Removes the header row from the output for a cleaner count.
-- `| wc -l`: Counts the number of lines, which corresponds to the total number of ConfigMaps this for linux os.
-- ` | Measure-Object -Line` Cunts the number of lines, which corresponds to the total number of ConfigMaps this for windows os
+To create a ConfigMap named `webapp-config-map` with the key-value pair `APP_COLOR=darkblue`, you can use either of the following methods:
 
-This will output the total count of ConfigMaps currently deployed in your Kubernetes environment.
-
-# 2. **Question:**  
-create a new ConfigMap with the following specifications?  
-- **ConfigMap Name:** `webapp-config-map`
-- **Data:** `APP_COLOR=darkblue`
-
-**Answer:**  
-To create a new ConfigMap with the name `webapp-config-map` and data `APP_COLOR=darkblue`, you can use the following `kubectl` command:
-
+### **Command-Line Creation**
 ```bash
 kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
 ```
-![alt text](image-3.png)
-This command creates the ConfigMap directly with the specified key-value pair.
+![Creating ConfigMap via CLI](image-3.png)
 
-Alternatively, you can create it using a YAML file:
-
-1. **I Created a YAML file** (e.g., `ymlfiles/q1/q1_config.yaml`) with the following content:
+### **YAML File Creation**
+1. Create a YAML file (e.g., `ymlfiles/q1/q1_config.yaml`):
 
    ```yaml
    apiVersion: v1
@@ -59,23 +49,22 @@ Alternatively, you can create it using a YAML file:
      APP_COLOR: darkblue
    ```
 
-2. **Apply the YAML file** with:
+2. Apply the YAML file:
 
    ```bash
    kubectl apply -f ymlfiles/q1/q1_config.yaml
    ```
 
-This  added the `webapp-config-map` ConfigMap with the specified data to your Kubernetes environment.
-![alt text](image-4.png)
-this is not error becuase i do the same config by comand line and then by yml files he want to compare two of them to know if something is change so he write the last status
- 
-# 3. Question
+![Applying ConfigMap YAML File](image-4.png)
 
-Create a webapp-color POD with nginx image and use the created ConfigMap
+---
 
+## 3. **Creating a Pod with Nginx Image Using ConfigMap**
 
-### 1. **I Created a Pod YAML File**  
-I Created a YAML file (e.g., `ymlfiles/q1/deploy.yaml`) to define the pod and reference the `ConfigMap`.
+To create a pod named `webapp-color` that uses the `nginx` image and references the `webapp-config-map` ConfigMap, follow these steps:
+
+### **Pod YAML Definition**
+Create a YAML file (e.g., `ymlfiles/q1/deploy.yaml`):
 
 ```yaml
 apiVersion: v1
@@ -91,68 +80,53 @@ spec:
         name: webapp-config-map
 ```
 
-### Explanation:
-- **`envFrom`**: This references the `ConfigMap` named `webapp-config-map` and sets the values from the `ConfigMap` as environment variables inside the pod.
-- The `nginx` container is defined as the main container, using the official `nginx` image.
+### **Explanation**
+- `envFrom`: References the ConfigMap named `webapp-config-map`, setting `APP_COLOR` as an environment variable in the pod.
 
-### 2. **Apply the YAML File**  
-Once you have created the YAML file, apply it using the `kubectl apply` command:
+### **Applying the YAML**
+Apply the configuration file to deploy the pod:
 
 ```bash
 kubectl apply -f ymlfiles/q2/deploy.yaml
 ```
-![alt text](image-5.png)
+![Applying Pod YAML File](image-5.png)
 
-### 3. **Verify the Pod**  
-To check if the pod was created successfully, you can use the following command:
+---
 
-```bash
-kubectl get pods
-```
-![alt text](image-6.png)
-### 4. **Check the Environment Variable in the Pod**  
-To verify that the `ConfigMap` data (`APP_COLOR`) is set as an environment variable inside the pod, you can exec into the pod and print the environment variable:
+## 4. **Counting Secrets in the Kubernetes Environment**
 
-```bash
-kubectl exec -it webapp-color -- printenv APP_COLOR
-```
-![alt text](image-7.png)
-This should output `darkblue`, which is the value from the `ConfigMap`.
+To get the total number of Secrets in your Kubernetes cluster, use the following commands:
 
-By following these steps, you will create a pod named `webapp-color` that runs the `nginx` image and uses the `APP_COLOR` from the `ConfigMap` as an environment variable.
-
-# 4. Question
-How many Secrets exist on the system?
-
-To check how many Secrets exist in your Kubernetes cluster, you can run the following command:
-
+### **Linux**
 ```bash
 kubectl get secrets --all-namespaces --no-headers | wc -l
 ```
-![alt text](image-9.png)
+![Secret Count on Linux](image-9.png)
+
+### **Windows**
 ```powershell
 kubectl get secrets --all-namespaces --no-headers | Measure-Object -Line
 ```
-![alt text](image-8.png)
-This command does the following:
-- `kubectl get secrets --all-namespaces`: Lists all secrets in all namespaces.
-- `--no-headers`: Removes the headers from the output.
-- `wc -l`: Counts the number of lines (which corresponds to the number of secrets).
+![Secret Count on Windows](image-8.png)
 
-# 5. Question
-How many secrets are defined in the default-token secret?
+---
 
-there is no secrets in k8s at all 
+## 5. **Checking Secrets in `default-token`**
 
-![alt text](image-8.png)
+If no secrets are present in your Kubernetes environment, this check will output `0`, indicating that there are no secrets.
 
+![No Secrets Found](image-8.png)
 
-# 6. Question 
-Create a POD called `db-pod` with the image `mysql:5.7`, then check the POD status
+---
 
-## i created yml file that create `db-pod` with image `mysql:5.7` in `ymlfiles/q3/deploy.yml`
+## 6. **Creating a `db-pod` with MySQL Image and Checking Pod Status**
 
-```yml
+To create a pod named `db-pod` with the image `mysql:5.7`, define and apply a YAML configuration:
+
+### **Pod YAML Definition**
+Create a YAML file (e.g., `ymlfiles/q3/deploy.yml`):
+
+```yaml
 apiVersion: v1
 kind: Pod
 metadata:
@@ -163,28 +137,25 @@ spec:
     image: mysql:5.7
     ports:
     - containerPort: 3306
-
 ```
 
-and i applied the yml file
+### **Applying the YAML**
 ```bash
 kubectl apply -f ymlfiles/q3/deploy.yml
 ```
-Once the pod is created, you can check its status by running:
 
-![alt text](image-10.png)
+![Applying db-pod YAML File](image-10.png)
+
+---
+
+## 7. **Why the `db-pod` Status is Not Ready**
+
+To find out why `db-pod` is not ready, check the pod logs:
 
 ```bash
-kubectl get pods db-pod
+kubectl logs db-pod
 ```
-![alt text](image-11.png)
-# 7. Question 
-Why the `db-pod` status is not ready?
 
-to know why `db-pod` status is not ready the main way check logs
-  ```bash
-  kubectl logs db-pod
-  ```
 ```
 ❯ kubectl logs db-pod
 2024-11-07 11:24:36+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.7.44-1.el7 started.
@@ -196,12 +167,16 @@ to know why `db-pod` status is not ready the main way check logs
     - MYSQL_ALLOW_EMPTY_PASSWORD
     - MYSQL_RANDOM_ROOT_PASSWORD
 ```
-it is appear  we must defined `MYSQL_ROOT_PASSWORD` and `MYSQL_ALLOW_EMPTY_PASSWORD` and `MYSQL_RANDOM_ROOT_PASSWORD` in envirnment of
 
-# 8. Question
-8. Create a new secret named `db-secret` with the data given below:
- 
-you can create directly throught comand line
+It appears that you need to define one of the following environment variables: `MYSQL_ROOT_PASSWORD`, `MYSQL_ALLOW_EMPTY_PASSWORD`, or `MYSQL_RANDOM_ROOT_PASSWORD`.
+
+---
+
+## 8. **Creating a New Secret `db-secret` with Specific Data**
+
+You can create the secret via the command line or with a YAML file.
+
+### **Command-Line Creation**
 ```bash
 kubectl create secret generic db-secret \
   --from-literal=MYSQL_DATABASE=SQI01 \
@@ -209,8 +184,9 @@ kubectl create secret generic db-secret \
   --from-literal=MYSQL_PASSWORD=password \
   --from-literal=MYSQL_ROOT_PASSWORD=password123
 ```
-**or create by yml**
-YAML definition for the `db-secret` in file `ymlfiles/q4/secrets.yml`:
+
+### **YAML File Creation**
+Create a YAML file (e.g., `ymlfiles/q4/secrets.yml`):
 
 ```yaml
 apiVersion: v1
@@ -219,50 +195,36 @@ metadata:
   name: db-secret
 type: Opaque
 data:
-  MYSQL_DATABASE: c3FJMDE=           # Base64 encoded value of "SQI01"
-  MYSQL_USER: dXNlcjE=               # Base64 encoded value of "user1"
-  MYSQL_PASSWORD: cGFzc3dvcmQ=       # Base64 encoded value of "password"
-  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQxMjM= # Base64 encoded value of "password123"
+  MYSQL_DATABASE: c3FJMDE=
+  MYSQL_USER: dXNlcjE=
+  MYSQL_PASSWORD: cGFzc3dvcmQ=
+  MYSQL_ROOT_PASSWORD: cGFzc3dvcmQxMjM=
 ```
-> [!IMPORTANT]  
-> Note:
-> - The values for `MYSQL_DATABASE`, `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_ROOT_PASSWORD` must be encoded in base64, as Kubernetes secrets store data in base64 format.
->  - To encode a value in base64, you can use the following command in Linux or macOS:
->
->    ```bash
->    echo -n "value" | base64
->   ```
->
->   For example:
->   ```bash
->   echo -n "SQI01" | base64
->   ```
->
->   This will output: `c3FJMDE=`
 
-to apply it 
+> **Note**: Values in Kubernetes secrets must be base64-encoded.
+
+To apply the secret:
 ```bash
 kubectl apply -f ymlfiles/q4/secrets.yml
 ```
-![alt text](image-12.png)
-This command creates a new secret called `db-secret` with the given key-value pairs.
+![Applying db-secret YAML File](image-12.png)
 
-To confirm the secret was created, you can run:
+To confirm the secret was created:
 
 ```bash
 kubectl get secret db-secret -o yaml
 ```
 
-This will display the secret in YAML format, with the values encoded in base64.
-![alt text](image-13.png)
+![db-secret Confirmation](image-13.png)
 
-# 9. Configure `db-pod` to load environment variables from the newly created secret
+---
 
-To configure `db-pod` to load environment variables from the `db-secret` secret, you need to update the pod definition to reference the secret for the environment variables.
+## 9. **Configuring `db-pod` to Use the New Secret**
 
-Here’s how you can modify the `db-pod` configuration in YAML to load the environment variables from the `db-secret`:
+Modify the `db-pod` YAML to load environment variables from `db-secret`:
 
-## YAML Definition for `db-pod` to use the `db-secret` in file `ymlfiles/q5/deploy_with_secrets` 
+### **YAML Definition for `db-pod` Using `db-secret`**
+Save the following YAML in `ymlfiles/q5/deploy_with_secrets.yml`:
 
 ```yaml
 apiVersion: v1
@@ -298,35 +260,293 @@ spec:
           key: MYSQL_ROOT_PASSWORD
 ```
 
-## Steps to apply this configuration:
-![alt text](image-14.png)
-1. **Save the updated configuration to a file** named `ymlfiles/q5/deploy_with_secrets.yml`.
-2. **Delete the existing pod** (if it’s already running) to apply the changes:
+### **Applying the Configuration**
+1. Delete the existing `db-pod`:
 
    ```bash
    kubectl delete pod db-pod
-![alt text](image-15.png)   ```
+   ```
+   ![Deleting db-pod](image-15.png)
 
-3. **Recreate the pod** by applying the updated YAML file:
+2. Apply the updated YAML file:
 
    ```bash
    kubectl apply -f ymlfiles/q5/deploy_with_secrets.yml
    ```
-![alt text](image-16.png)
-## Verifying the Pod Status:
-Once the pod is recreated, you can verify that it’s running with the environment variables set correctly by checking the pod status:
+   ![Recreating db-pod](image-16.png)
+
+To verify:
 
 ```bash
 kubectl get pods db-pod
 ```
 
-To confirm that the environment variables are correctly set inside the container, you can check the pod's environment variables:
+![db-pod Status Check](image-17.png)
 
-```bash
-kubectl exec -it db-pod -- env
+---
+
+## 10. **Creating a Multi-Container Pod**
+
+To create a pod with two containers (`lemon` using `busybox` and `gold` using `redis`), define the following YAML in `ymlfiles/q6/deploy.yml`:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: yellow
+spec:
+  containers:
+  - name: lemon
+    image: busybox
+    command: ["sleep", "3600"]
+  - name: gold
+    image: redis
+    ports:
+    - containerPort: 6379
 ```
 
-This will display all the environment variables, including the ones you configured from the secret.
+### **Applying the Configuration**
+```bash
+kubectl apply -f ymlfiles/q6/deploy.yml
+```
+![Applying yellow Pod YAML](image-18.png)
 
-![alt text](image-17.png)
+Verify pod status:
+
+```bash
+kubectl get pods yellow
+```
+
+![yellow Pod Status Check](image-19.png)
+
+To list container names and images in the pod:
+
+```bash
+kubectl get pod yellow -
+
+o jsonpath="{.spec.containers[*].name} {.spec.containers[*].image}"
+```
+
+---
+
+End of Report.
+
+
+## 11. Create a Pod `red` with the Redis image and an InitContainer that uses the BusyBox image and sleeps for 20 seconds
+
+To create a pod with the `redis` image and an `initContainer` that uses the `busybox` image and sleeps for 20 seconds, you can define the pod as follows in file `ymlfiles/q7/deploy_red.yml`:
+
+## YAML Definition for Pod `red` with InitContainer
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: red
+spec:
+  initContainers:
+  - name: init-sleep
+    image: busybox
+    command: ["sleep", "20"]
+  containers:
+  - name: redis
+    image: redis
+    ports:
+    - containerPort: 6379
+```
+
+Apply the YAML file to create the pod:
+
+   ```bash
+   kubectl apply -f ymlfiles/q7/deploy_red.yml
+   ```
+![alt text](image-21.png)
+
+## 12. Create a Pod named `print-envars-greeting` with the specified environment variables and command
+
+To create a pod named `print-envars-greeting` that echoes the environment variables, use the following YAML definition in file `ymlfiles/q8/deploy.yml`:
+
+ YAML Definition for `print-envars-greeting` Pod in file `ymlfiles/q8/deploy.yml`
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: print-envars-greeting
+spec:
+  containers:
+  - name: print-env-container
+    image: bash
+    env:
+    - name: GREETING
+      value: "welcome to"
+    - name: COMPANY
+      value: "Track"
+    - name: GROUP
+      value: "DevOps"
+    command: ["bash", "-c", 'echo "$GREETING $COMPANY $GROUP"']
+```
+
+1. Apply the YAML file to create the pod:
+
+   ```bash
+   kubectl apply -f ymlfiles/q8/deploy.yml
+   ```
+
+2. After the pod starts, check the output using:
+
+   ```bash
+   kubectl logs -f print-envars-greeting
+   ```
+![alt text](image-22.png)
+
+This will print the message: `welcome to Devops Track`.
+
+## 13. Where is the default kubeconfig file located in the current environment?
+
+By default, the Kubernetes `kubeconfig` file is located at:
+
+```bash
+~/.kube/config
+```
+![alt text](image-23.png)
+You can verify this location by checking the `KUBECONFIG` environment variable:
+
+```bash
+echo $KUBECONFIG
+```
+
+If it's not set, Kubernetes uses the default location (`~/.kube/config`).
+
+## 14. How many clusters are defined in the default kubeconfig file?
+
+To check how many clusters are defined in the default `kubeconfig` file, you can run:
+
+```bash
+kubectl config get-clusters
+```
+
+![alt text](image-24.png)
+This will list all clusters defined in your `kubeconfig` file. You can count the number of clusters by running:
+
+```bash
+kubectl config get-clusters --no-headers | wc -l
+```
+
+## 15. What is the user configured in the current context?
+
+To check which user is configured in the current Kubernetes context, you can run the following command:
+
+```bash
+kubectl config current-context
+```
+![alt text](image-25.png)
+This will show you the current context, including the user being used. If you want more detailed information about the current context, you can run:
+
+```bash
+kubectl config view --minify
+```
+![alt text](image-26.png)
+This will show detailed information, including the user, cluster, and namespace of the current context.
+
+---
+
+## 16. Create a Persistent Volume (PV) with the given specifications
+
+
+#### YAML Definition for Persistent Volume in file `ymlfiles/q8/log_volume.yml`
+
+```yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-log
+spec:
+  storageClassName: manual
+
+  capacity:
+    storage: 100Mi  
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /hi_im_here  
+    type: DirectoryOrCreate
+```
+
+Apply the YAML file to create the Persistent Volume:
+
+   ```bash
+   kubectl apply -f ymlfiles/q8/log_volume.yml
+   ```
+![alt text](image-27.png)
+![alt text](image-28.png)
+
+
+## 17. Create a Persistent Volume Claim (PVC) with the given specifications
+
+To create a Persistent Volume Claim named `claim-log-1` with a storage request of 50Mi and ReadWriteMany access mode,
+
+#### YAML Definition for Persistent Volume Claim in file `ymlfiles/q10/pvc.yml`
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: claim-log-1
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 50Mi
+  volumeName: pv-log  
+```
+
+
+Apply the YAML file to create the PVC:
+
+   ```bash
+   kubectl apply -f ymlfiles/q10/pvc.yml
+   ```
+![alt text](image-29.png)
+---
+
+## 18. Create a webapp Pod to use the Persistent Volume Claim as its storage
+
+To create a `webapp` pod using the `nginx` image and mounting the Persistent Volume Claim `claim-log-1` at `/var/log/nginx`, use the following YAML:
+
+#### YAML Definition for the `webapp` Pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    volumeMounts:
+    - mountPath: /var/log/nginx
+      name: claim-log-1
+  volumes:
+  - name: claim-log-1
+    persistentVolumeClaim:
+      claimName: claim-log-1
+```
+
+
+1. Apply the YAML file to create the pod:
+
+   ```bash
+   kubectl apply -f ymlfiles/q11/webapp-pod.yaml
+   ```
+do not forget to expose port to host
+![alt text](image-30.png)
+
+
+![alt text](image-31.png)
+![alt text](image-32.png)
+---
 
