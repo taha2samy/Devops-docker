@@ -12,7 +12,7 @@
 
 ---
 
-> **[!IMPORTANT]**  
+> [!IMPORTANT]
 > Each directory of the k8s labs contains a `README.md` file that explains each step and question, along with a detailed description of how it was implemented. The file also includes relevant screenshots for better understanding.
 
 ---
