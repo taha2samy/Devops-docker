@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: container-2
+spec:
+  containers:
+    - name: container-2
+      image: alpine
+      tty: true
+      volumeMounts:
+        - mountPath: /data
+          name: demo-volume
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo 'Hostname: container-1' > /data/container_2_info.txt && \
+          echo 'IP Address: $(hostname -i)' >> /data/container_2_info.txt && \
+          env >> /data/container_1_info.txt && \
+          while true; do \
+            echo 'Test running' >> /data/test.txt; \
+            sleep 5; \
+          done
+  volumes:
+    - name: demo-volume
+      persistentVolumeClaim:
+        claimName: demo-pvc

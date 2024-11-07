@@ -15,13 +15,13 @@ To find the total number of ConfigMaps in your Kubernetes environment, use the f
 ```bash
 kubectl get configmaps --all-namespaces --no-headers | wc -l
 ```
-![ConfigMap Count on Linux](image-1.png)
+![ConfigMap Count on Linux](images/image-1.png)
 
 ### **Windows**
 ```powershell
 kubectl get configmaps --all-namespaces --no-headers | Measure-Object -Line
 ```
-![ConfigMap Count on Windows](image.png)
+![ConfigMap Count on Windows](images/image.png)
 
 These commands list all ConfigMaps across all namespaces, remove headers for a cleaner output, and count the entries.
 
@@ -35,7 +35,7 @@ To create a ConfigMap named `webapp-config-map` with the key-value pair `APP_COL
 ```bash
 kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
 ```
-![Creating ConfigMap via CLI](image-3.png)
+![Creating ConfigMap via CLI](images/image-3.png)
 
 ### **YAML File Creation**
 1. Create a YAML file (e.g., `ymlfiles/q1/q1_config.yaml`):
@@ -55,7 +55,7 @@ kubectl create configmap webapp-config-map --from-literal=APP_COLOR=darkblue
    kubectl apply -f ymlfiles/q1/q1_config.yaml
    ```
 
-![Applying ConfigMap YAML File](image-4.png)
+![Applying ConfigMap YAML File](images/image-4.png)
 
 ---
 
@@ -89,7 +89,7 @@ Apply the configuration file to deploy the pod:
 ```bash
 kubectl apply -f ymlfiles/q2/deploy.yaml
 ```
-![Applying Pod YAML File](image-5.png)
+![Applying Pod YAML File](images/image-5.png)
 
 ---
 
@@ -101,13 +101,13 @@ To get the total number of Secrets in your Kubernetes cluster, use the following
 ```bash
 kubectl get secrets --all-namespaces --no-headers | wc -l
 ```
-![Secret Count on Linux](image-9.png)
+![Secret Count on Linux](images/image-9.png)
 
 ### **Windows**
 ```powershell
 kubectl get secrets --all-namespaces --no-headers | Measure-Object -Line
 ```
-![Secret Count on Windows](image-8.png)
+![Secret Count on Windows](images/image-8.png)
 
 ---
 
@@ -115,7 +115,7 @@ kubectl get secrets --all-namespaces --no-headers | Measure-Object -Line
 
 If no secrets are present in your Kubernetes environment, this check will output `0`, indicating that there are no secrets.
 
-![No Secrets Found](image-8.png)
+![No Secrets Found](images/image-8.png)
 
 ---
 
@@ -144,7 +144,7 @@ spec:
 kubectl apply -f ymlfiles/q3/deploy.yml
 ```
 
-![Applying db-pod YAML File](image-10.png)
+![Applying db-pod YAML File](images/image-10.png)
 
 ---
 
@@ -207,7 +207,7 @@ To apply the secret:
 ```bash
 kubectl apply -f ymlfiles/q4/secrets.yml
 ```
-![Applying db-secret YAML File](image-12.png)
+![Applying db-secret YAML File](images/image-12.png)
 
 To confirm the secret was created:
 
@@ -215,7 +215,7 @@ To confirm the secret was created:
 kubectl get secret db-secret -o yaml
 ```
 
-![db-secret Confirmation](image-13.png)
+![db-secret Confirmation](images/image-13.png)
 
 ---
 
@@ -266,14 +266,14 @@ spec:
    ```bash
    kubectl delete pod db-pod
    ```
-   ![Deleting db-pod](image-15.png)
+   ![Deleting db-pod](images/image-15.png)
 
 2. Apply the updated YAML file:
 
    ```bash
    kubectl apply -f ymlfiles/q5/deploy_with_secrets.yml
    ```
-   ![Recreating db-pod](image-16.png)
+   ![Recreating db-pod](images/image-16.png)
 
 To verify:
 
@@ -281,7 +281,7 @@ To verify:
 kubectl get pods db-pod
 ```
 
-![db-pod Status Check](image-17.png)
+![db-pod Status Check](images/image-17.png)
 
 ---
 
@@ -309,7 +309,7 @@ spec:
 ```bash
 kubectl apply -f ymlfiles/q6/deploy.yml
 ```
-![Applying yellow Pod YAML](image-18.png)
+![Applying yellow Pod YAML](images/image-18.png)
 
 Verify pod status:
 
@@ -317,7 +317,7 @@ Verify pod status:
 kubectl get pods yellow
 ```
 
-![yellow Pod Status Check](image-19.png)
+![yellow Pod Status Check](images/image-19.png)
 
 To list container names and images in the pod:
 
@@ -360,7 +360,7 @@ Apply the YAML file to create the pod:
    ```bash
    kubectl apply -f ymlfiles/q7/deploy_red.yml
    ```
-![alt text](image-21.png)
+![alt text](images/image-21.png)
 
 ## 12. Create a Pod named `print-envars-greeting` with the specified environment variables and command
 
@@ -398,7 +398,7 @@ spec:
    ```bash
    kubectl logs -f print-envars-greeting
    ```
-![alt text](image-22.png)
+![alt text](images/image-22.png)
 
 This will print the message: `welcome to Devops Track`.
 
@@ -409,7 +409,7 @@ By default, the Kubernetes `kubeconfig` file is located at:
 ```bash
 ~/.kube/config
 ```
-![alt text](image-23.png)
+![alt text](images/image-23.png)
 You can verify this location by checking the `KUBECONFIG` environment variable:
 
 ```bash
@@ -426,7 +426,7 @@ To check how many clusters are defined in the default `kubeconfig` file, you can
 kubectl config get-clusters
 ```
 
-![alt text](image-24.png)
+![alt text](images/image-24.png)
 This will list all clusters defined in your `kubeconfig` file. You can count the number of clusters by running:
 
 ```bash
@@ -440,13 +440,13 @@ To check which user is configured in the current Kubernetes context, you can run
 ```bash
 kubectl config current-context
 ```
-![alt text](image-25.png)
+![alt text](images/image-25.png)
 This will show you the current context, including the user being used. If you want more detailed information about the current context, you can run:
 
 ```bash
 kubectl config view --minify
 ```
-![alt text](image-26.png)
+![alt text](images/image-26.png)
 This will show detailed information, including the user, cluster, and namespace of the current context.
 
 ---
@@ -478,8 +478,8 @@ Apply the YAML file to create the Persistent Volume:
    ```bash
    kubectl apply -f ymlfiles/q8/log_volume.yml
    ```
-![alt text](image-27.png)
-![alt text](image-28.png)
+![alt text](images/image-27.png)
+![alt text](images/image-28.png)
 
 
 ## 17. Create a Persistent Volume Claim (PVC) with the given specifications
@@ -509,7 +509,7 @@ Apply the YAML file to create the PVC:
    ```bash
    kubectl apply -f ymlfiles/q10/pvc.yml
    ```
-![alt text](image-29.png)
+![alt text](images/image-29.png)
 ---
 
 ## 18. Create a webapp Pod to use the Persistent Volume Claim as its storage
@@ -543,10 +543,10 @@ spec:
    kubectl apply -f ymlfiles/q11/webapp-pod.yaml
    ```
 do not forget to expose port to host
-![alt text](image-30.png)
+![alt text](images/image-30.png)
 
 
-![alt text](image-31.png)
-![alt text](image-32.png)
+![alt text](images/image-31.png)
+![alt text](images/image-32.png)
 ---
 
